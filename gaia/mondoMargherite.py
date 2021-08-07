@@ -25,7 +25,6 @@ IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 """
 
-# Imports
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -62,7 +61,6 @@ energiaSolare_min = 0.5
 energiaSolare_max = 1.3 # 1.6
 energiaSolare_step = 0.002
 
-# If run from command line, do the whole thing
 if __name__ == '__main__':
     """Attiva la simulazione di daisyworld"""
     livelliEnergiaSolare = np.arange(energiaSolare_min, energiaSolare_max, energiaSolare_step)
@@ -75,9 +73,9 @@ if __name__ == '__main__':
     temperaturaPianetaStoria = np.zeros_like(livelliEnergiaSolare)
     temperaturaSenzaVita = np.zeros_like(livelliEnergiaSolare)
 
-    # Loop over livelliEnergiaSolare
+    # Loop su livelliEnergiaSolare
     for j, livelloEnergiaSolare in enumerate(livelliEnergiaSolare):
-        # Minimum daisy coverage
+        # Area minima di copertura delle margherite
         if areaNere < 0.01:
             areaNere = 0.01
         if areaBianche < 0.01:
