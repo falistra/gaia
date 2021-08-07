@@ -44,7 +44,7 @@ albedoNere = 0.25
 areaNere = 0.01 # 0.01
 areaTotale = 1
 albedoVuoto = 0.5
-insul = 20 # fattore di proporzionalita'  tra temperatura e albedo
+isolamento = 1 # 20 # isolamento fattore di proporzionalita'  tra temperatura e albedo
 
 tassoDecrescita = 0.3 # le margherite hanno una vita media di 3.3 anni. 
 # Calano di un 30% (0.3) all'anno
@@ -64,11 +64,11 @@ energiaSolare_step = 0.002
 
 # If run from command line, do the whole thing
 if __name__ == '__main__':
-    """Run the daisyworld model"""
-    # Initialize arrays
+    """Attiva la simulazione di daisyworld"""
     livelliEnergiaSolare = np.arange(energiaSolare_min, energiaSolare_max, energiaSolare_step)
     if REVERSE:
         livelliEnergiaSolare = livelliEnergiaSolare[::-1]
+
     areaNereStoria = np.zeros_like(livelliEnergiaSolare)
     areaBiancheStoria = np.zeros_like(livelliEnergiaSolare)
     areaVuotoStoria = np.zeros_like(livelliEnergiaSolare)
@@ -100,8 +100,8 @@ if __name__ == '__main__':
             # temperatura media del pianeta
             temperaturaMediaPianeta = np.power(livelloEnergiaSolare*(1-albedoPianeta)*costanteIrraggiamento/sigma, 0.25)
             # temperatura margherite
-            temperaturaMargheriteNere = temperaturaMediaPianeta + insul*(albedoPianeta-albedoNere)
-            temperaturaMargheriteBianche = temperaturaMediaPianeta + insul*(albedoPianeta-albedoBianche) 
+            temperaturaMargheriteNere = temperaturaMediaPianeta + isolamento*(albedoPianeta-albedoNere)
+            temperaturaMargheriteBianche = temperaturaMediaPianeta + isolamento*(albedoPianeta-albedoBianche) 
 
             # Determina tassi di crescita
             if (temperaturaMargheriteNere >= temperaturaMargheriteMinima
