@@ -48,10 +48,6 @@ isolamento = 1 # 20 # isolamento fattore di proporzionalita'  tra temperatura e 
 tassoDecrescita = 0.3 # le margherite hanno una vita media di 3.3 anni. 
 # Calano di un 30% (0.3) all'anno
 
-# Criteri di convergenza
-numeroMassimoIterazioni = 1000
-tolleranza = 0.000001
-
 # livelloEnergiaSolare terms
 costanteIrraggiamento = 917 # (W/mq)
 sigma = 5.67032e-8 # costante di Stefan-Boltzmann
@@ -61,6 +57,9 @@ energiaSolare_min = 0.5
 energiaSolare_max = 1.3 # 1.6
 energiaSolare_step = 0.002
 
+# Criteri di convergenza
+numeroMassimoIterazioni = 1000
+tolleranza = 0.000001
 if __name__ == '__main__':
     """Attiva la simulazione di daisyworld"""
     livelliEnergiaSolare = np.arange(energiaSolare_min, energiaSolare_max, energiaSolare_step)
@@ -93,10 +92,11 @@ if __name__ == '__main__':
         while it <= numeroMassimoIterazioni and cambiamentoPrecedenteIterazioneNere > tolleranza and cambiamentoPrecedenteIterazioneBianche > tolleranza:
             # albedo del pianeta
             albedoPianeta = (areaNere * albedoNere
+            
                      + areaBianche * albedoBianche
                      + areaVuoto * albedoVuoto) / areaTotale
             # temperatura media del pianeta
-            temperaturaMediaPianeta = np.power(livelloEnergiaSolare*(1-albedoPianeta)*costanteIrraggiamento/sigma, 0.25)
+            temperaturaMediaPianeta = np.power(livelloEnergiaSolare*(1-albedoPianeta)*costanteIrraggiamento/sigma, 1/4)
             # temperatura margherite
             temperaturaMargheriteNere = temperaturaMediaPianeta + isolamento*(albedoPianeta-albedoNere)
             temperaturaMargheriteBianche = temperaturaMediaPianeta + isolamento*(albedoPianeta-albedoBianche) 
@@ -127,9 +127,11 @@ if __name__ == '__main__':
             # Aggiorna aree, stati econteggio iterazioni
             cambiamentoAreaNerePrecedente = cambiamentoAreaNere
             cambiamentoAreaBianchePrecedente = cambiamentoAreaBianche
+
             areaNere = areaNere+cambiamentoAreaNere
             areaBianche = areaBianche+cambiamentoAreaBianche 
             areaVuoto = 1-(areaNere+areaBianche)
+
             it += 1
 
         # Vettore stati (storia)
